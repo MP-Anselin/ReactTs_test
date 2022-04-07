@@ -2,12 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e4b0aef-8948-424e-8766-1f7825f4e551" name="Changes" comment="Initial commit">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/API/api-auth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/API/api-product.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/API/http-common.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apis/auth.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apis/users.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/hooks.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/InputField.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ProductList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SingleTodo.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/auth/login-form/login-form.component.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/auth/signup-form/signup-form.component.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dto/create-user-request.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dto/login-request.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/interface/product.interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/User.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/models.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/home.page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/login.page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/signup.page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/protected-route.component.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/routes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/slices/auth.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react-app-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -30,10 +72,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/routes" />
+      <recent name="$PROJECT_DIR$/src/components" />
+      <recent name="$PROJECT_DIR$/src/models" />
+      <recent name="$PROJECT_DIR$/src/pages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -44,7 +98,7 @@
       <option name="presentableId" value="Default" />
       <updated>1649312874572</updated>
       <workItem from="1649312875755" duration="381000" />
-      <workItem from="1649313675912" duration="1024000" />
+      <workItem from="1649313675912" duration="11596000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1649314457072</created>
@@ -53,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649314457073</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Initial commit">
+      <created>1649314712669</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1649314712669</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
