@@ -6,7 +6,6 @@ import {SignupPage} from "../pages/signup.page";
 import {ProtectedRoute} from "./protected-route.component";
 
 const Routes: React.FC = () => {
-    console.log("I PASS HERE ROUTES ")
     return (
         <ReactRouterRoutes>
             <Route

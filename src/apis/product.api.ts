@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { User } from "../models/User";
+import { Product } from "../models/Product";
 
-export const productsApi = createApi({
-  reducerPath: "productsApi",
+export const productApi = createApi({
+  reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "/products",
   }),
   endpoints: (build) => ({
-    getProducts: build.mutation<User, undefined>({
+    getProducts: build.query<Array<Product>, undefined>({
       query: () => ({
         url: "/",
         method: "GET",
@@ -17,4 +17,4 @@ export const productsApi = createApi({
   }),
 });
 
-export const { useGetProductsMutation } = productsApi;
+export const { useGetProductsQuery } = productApi;

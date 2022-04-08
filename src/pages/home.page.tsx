@@ -3,45 +3,52 @@ import "../App.css";
 import InputField from "../components/InputField";
 import TodoList from "../components/TodoList";
 import {DragDropContext, DropResult} from "react-beautiful-dnd";
-import {Todo} from "../models/models";
-import {useGetProductsMutation} from "../apis/product.api";
+import {useGetProductsQuery} from "../apis/product.api";
 import {selectCurrentUser} from "../slices/auth.slice";
 import {useAppSelector} from "../app/hooks";
-import {LoginForm} from "../components/auth/login-form/login-form.component";
+import {Product} from "../models/Product";
+import {useAddProductInCartMutation} from "../apis/cart.api";
 
 const HomePage: React.FC = () => {
 
-    const user = useAppSelector((state) => selectCurrentUser(state));
+    useAppSelector((state) => selectCurrentUser(state));
 
-    const [getProducts] = useGetProductsMutation();
+    const {data: productDataInfo} = useGetProductsQuery(undefined);
+    const [addProductInCart] = useAddProductInCartMutation();
     const [products, setProducts] = useState<Array<any>>([]);
     const [todo, setTodo] = useState<string>("");
-    const [todos, setTodos] = useState<Array<Todo>>([]);
-    const [CompletedTodos, setCompletedTodos] = useState<Array<Todo>>([]);
+    const [todos, setTodos] = useState<Array<any>>([]);
+    const [CompletedTodos, setCompletedTodos] = useState<Array<any>>([]);
 
     useEffect(() => {
-        console.log("BEFORE home page useEffect products => ", products)
-
-        if (products && !products.length) {
-            console.log("home page useEffect products.length => ", products.length)
-            console.log("home page useEffect products => ", products)
-            getProducts(undefined)
-                .then((response: any) => {
-                        console.log("reponse => ", response.data)
-                        setProducts(response.data)
-                    }
-                )
-                .catch((err) => {
-                    console.log(err.message);
+        function setProdata() {
+            if (products && !products.length && productDataInfo) {
+                const newList: Array<Product> = [];
+                productDataInfo.forEach((prod: Product) => {
+                    newList.push({...prod, idDate: Date.now()})
                 });
+                setProducts(newList);
+            }
         }
-    })
 
-    const handleAdd = (e: React.FormEvent) => {
+        setProdata();
+    }, [products, productDataInfo])
+
+    const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (todo) {
-            setTodos([...todos, {_id: Date.now(), name: todo, isDone: false}]);
+        if (productDataInfo && todo) {
+            const element = productDataInfo.find((prod: Product) => prod.name === todo)
+            if (element) {
+                setTodos([...todos, {...element, todo, idDate: Date.now(), isDone: false}]);
+                if (element?._id?.$oid) {
+                    try {
+                        await addProductInCart({product_id: element._id.$oid})
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            }
             setTodo("");
         }
     };
@@ -85,20 +92,13 @@ const HomePage: React.FC = () => {
         setTodos(active);
     };
 
-    console.log("helllo ==> ")
-
     return (
-        /*        <DragDropContext onDragEnd={onDragEnd}>
-                        <LoginForm/>
-                </DragDropContext>*/
         <DragDropContext onDragEnd={onDragEnd}>
             <span className="heading">Taskify</span>
             <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd}/>
             <TodoList
-                todos={products}
+                todos={todos}
                 setTodos={setTodos}
-                CompletedTodos={CompletedTodos}
-                setCompletedTodos={setCompletedTodos}
             />
         </DragDropContext>
 
