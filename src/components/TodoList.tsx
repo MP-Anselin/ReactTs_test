@@ -10,28 +10,30 @@ interface props {
   CompletedTodos: Array<Todo>;
 }
 
-const ProductList: React.FC<props> = ({
+const TodoList: React.FC<props> = ({
   todos,
   setTodos,
   CompletedTodos,
   setCompletedTodos,
 }) => {
-  return (
+
+    console.log("todos => ", todos)
+    return (
     <div className="container">
       <Droppable droppableId="TodosList">
-        {(provided, snapshot) => (
+        {(provided: any, snapshot: any) => (
           <div
             className={`todos ${snapshot.isDraggingOver ? "dragactive" : ""}`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <span className="todos__heading">Products</span>
+            <span className="todos__heading">Active Tasks</span>
             {todos?.map((todo, index) => (
               <SingleTodo
                 index={index}
                 todos={todos}
                 todo={todo}
-                key={todo.id}
+                key={todo._id}
                 setTodos={setTodos}
               />
             ))}
@@ -40,7 +42,7 @@ const ProductList: React.FC<props> = ({
         )}
       </Droppable>
       <Droppable droppableId="TodosRemove">
-        {(provided, snapshot) => (
+        {(provided: any, snapshot: any) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -54,7 +56,7 @@ const ProductList: React.FC<props> = ({
                 index={index}
                 todos={CompletedTodos}
                 todo={todo}
-                key={todo.id}
+                key={todo._id}
                 setTodos={setCompletedTodos}
               />
             ))}
@@ -66,4 +68,4 @@ const ProductList: React.FC<props> = ({
   );
 };
 
-export default ProductList;
+export default TodoList;

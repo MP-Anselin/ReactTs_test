@@ -20,13 +20,36 @@
   outline: none;
 }
 
-.input_submit {
+.input_swap {
   position: absolute;
-  width: 50px;
+  width: 70px;
   height: 50px;
   margin: 12px;
   border-radius: 50px;
-  right: 0px;
+  right: 100px;
+  border: none;
+  font-size: 15px;
+  background-color: #2f74c0;
+  color: white;
+  transition: 0.2s all;
+  box-shadow: 0 0 10px black;
+}
+
+.input_swap:hover {
+  background-color: #388ae2;
+}
+
+.input_swap:active {
+  transform: scale(0.8);
+  box-shadow: 0 0 5px black;
+}
+
+.input_submit {
+  position: absolute;
+  width: 40%;
+  height: 50px;
+  margin: 12px;
+  border-radius: 50px;
   border: none;
   font-size: 15px;
   background-color: #2f74c0;
