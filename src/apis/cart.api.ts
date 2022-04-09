@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CartManagementRequest } from "../dto/cart-management-request.dto";
+import { Cart } from "../models/Cart";
 
 export const cartApi = createApi({
   reducerPath: "cartApi",
@@ -23,7 +24,14 @@ export const cartApi = createApi({
         withCredentials: true,
       }),
     }),
+    getProductInCart: build.mutation<Cart, undefined>({
+      query: (cartManagementRequest) => ({
+        url: "products",
+        method: "GET",
+        withCredentials: true,
+      }),
+    }),
   }),
 });
 
-export const { useAddProductInCartMutation, useDeleteProductInCartMutation } = cartApi;
+export const { useAddProductInCartMutation, useDeleteProductInCartMutation, useGetProductInCartMutation } = cartApi;

@@ -2,37 +2,51 @@ import React, {useEffect, useState} from "react";
 import "../App.css";
 import InputField from "../components/InputField";
 import TodoList from "../components/TodoList";
-import {DragDropContext, DropResult} from "react-beautiful-dnd";
-import {useGetProductsQuery} from "../apis/product.api";
 import {selectCurrentUser} from "../slices/auth.slice";
 import {useAppSelector} from "../app/hooks";
 import {Product} from "../models/Product";
-import {useAddProductInCartMutation} from "../apis/cart.api";
+import {useAddProductInCartMutation, useGetProductInCartMutation} from "../apis/cart.api";
+import {Cart} from "../models/Cart";
+import { useGetProductsQuery } from "../apis/product.api";
 
 const HomePage: React.FC = () => {
 
     useAppSelector((state) => selectCurrentUser(state));
 
     const {data: productDataInfo} = useGetProductsQuery(undefined);
+    const [getCartContent] = useGetProductInCartMutation()
     const [addProductInCart] = useAddProductInCartMutation();
-    const [products, setProducts] = useState<Array<any>>([]);
+
+    const [cartProducts, setCartProducts] = useState<Array<any>>([]);
+    const [cartPrice, setCartPrice] = useState<number>(0);
     const [todo, setTodo] = useState<string>("");
-    const [todos, setTodos] = useState<Array<any>>([]);
-    const [CompletedTodos, setCompletedTodos] = useState<Array<any>>([]);
+
+
+    const setCartData = async (productDataInfo:  Product[] | undefined) => {
+        if (!productDataInfo)
+            return;
+        try {
+            const content = (await getCartContent(undefined)) as { data: Cart };
+            const newList: Array<Product> = [];
+            productDataInfo.forEach((product) => {
+                if (product) {
+                    content.data.products.forEach((id) => {
+                        if (product._id && id === product._id.$oid)
+                            newList.push({...product, idDate: Date.now()})
+                    })
+                }
+            })
+            setCartProducts([...newList]);
+            if (content && content.data)
+                setCartPrice(content.data.price)
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     useEffect(() => {
-        function setProdata() {
-            if (products && !products.length && productDataInfo) {
-                const newList: Array<Product> = [];
-                productDataInfo.forEach((prod: Product) => {
-                    newList.push({...prod, idDate: Date.now()})
-                });
-                setProducts(newList);
-            }
-        }
-
-        setProdata();
-    }, [products, productDataInfo])
+        setCartData(productDataInfo);
+    }, [productDataInfo])
 
     const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,10 +54,14 @@ const HomePage: React.FC = () => {
         if (productDataInfo && todo) {
             const element = productDataInfo.find((prod: Product) => prod.name === todo)
             if (element) {
-                setTodos([...todos, {...element, todo, idDate: Date.now(), isDone: false}]);
+                setCartProducts([...cartProducts, {...element, todo, idDate: Date.now(), isDone: false}]);
                 if (element?._id?.$oid) {
                     try {
                         await addProductInCart({product_id: element._id.$oid})
+                        const content = (await getCartContent(undefined)) as { data: Cart };
+                        setCartProducts([...cartProducts, {...element, todo, idDate: Date.now(), isDone: false}]);
+                        if (content && content.data && content.data?.price)
+                            setCartPrice(content.data.price)
                     } catch (err) {
                         console.error(err);
                     }
@@ -53,54 +71,22 @@ const HomePage: React.FC = () => {
         }
     };
 
-    const onDragEnd = (result: DropResult) => {
-        const {destination, source} = result;
-
-        console.log(result);
-
-        if (!destination) {
-            return;
-        }
-
-        if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-        ) {
-            return;
-        }
-
-        let add;
-        let active = todos;
-        let complete = CompletedTodos;
-        // Source Logic
-        if (source.droppableId === "TodosList") {
-            add = active[source.index];
-            active.splice(source.index, 1);
-        } else {
-            add = complete[source.index];
-            complete.splice(source.index, 1);
-        }
-
-        // Destination Logic
-        if (destination.droppableId === "TodosList") {
-            active.splice(destination.index, 0, add);
-        } else {
-            complete.splice(destination.index, 0, add);
-        }
-
-        setCompletedTodos(complete);
-        setTodos(active);
-    };
-
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
+        <div>
             <span className="heading">Taskify</span>
             <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd}/>
             <TodoList
-                todos={todos}
-                setTodos={setTodos}
+                tiltle={"Product List"}
+                cartProducts={productDataInfo}
             />
-        </DragDropContext>
+            <TodoList
+                tiltle={"My Cart"}
+                finalPrice={cartPrice}
+                setCartPrice={setCartPrice}
+                cartProducts={cartProducts}
+                setCartProducts={setCartProducts}
+            />
+        </div>
 
     );
 };

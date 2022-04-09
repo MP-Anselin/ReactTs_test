@@ -18,7 +18,9 @@ const LoginForm: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+
         if (!email) {
             setEmailErrored(true);
         } else {
