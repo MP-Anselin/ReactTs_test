@@ -73,7 +73,7 @@ const HomePage: React.FC = () => {
 
     return (
         <div>
-            <span className="heading">Taskify</span>
+            <span className="heading">Shopphing Cart</span>
             <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd}/>
             <TodoList
                 tiltle={"Product List"}
